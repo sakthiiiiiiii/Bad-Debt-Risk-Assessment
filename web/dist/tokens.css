@@ -1,0 +1,21 @@
+/* Local app theme: original dark slate palette. */
+:root {
+  --color-background: #0B0F19;
+  --color-surface: #111827;
+  --color-elevated: #182233;
+  --color-border: #293548;
+  --color-text: #F1F5F9;
+  --color-muted: #9AAAC0;
+  --color-primary: #A7C7FF;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #F43F5E;
+  --font-heading: Bahnschrift, Segoe UI, sans-serif;
+  --font-body: Segoe UI, sans-serif;
+  --font-mono: Consolas, monospace;
+  --radius-DEFAULT: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 16px;
+  --space-page: 32px;
+  --space-gap: 20px;
+}

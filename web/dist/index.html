@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B0F19">
+  <meta name="description" content="Explore credit risk with three trained models, interpretable scores, and live scenario analysis.">
+  <title>Risk Observatory · Credit Intelligence</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to portfolio</a>
+  <aside class="sidebar">
+    <a class="brand" href="./" aria-label="Risk Observatory home"><span class="brand-symbol">◈</span><span>OBSERVATORY<span class="brand-sub">CREDIT INTELLIGENCE</span></span></a>
+    <div class="workspace"><span class="workspace-icon">R</span><div>Risk workspace<small>Bad debt analysis</small></div><span class="tiny-dot"></span></div>
+    <div class="nav-label">WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <button type="button" id="portfolio-nav" class="nav-item active" aria-current="page"><span data-icon="grid"></span>Portfolio overview<span class="nav-count" id="nav-count">—</span></button>
+      <button type="button" class="nav-item" id="predict-nav" disabled><span data-icon="shield"></span>Predict customer risk</button>
+      <button class="nav-item" id="performance-nav"><span data-icon="layers"></span>Model performance</button>
+      <button class="nav-item" id="method-nav"><span data-icon="book"></span>Methodology</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="private-note"><span data-icon="lock"></span>Local workspace</div><p>Three perspectives.<br>One clearer picture of risk.</p><div class="profile"><span>SJ</span><div>Project workspace<small>Local application</small></div></div></div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><div><span class="muted">Workspace</span><span class="slash">/</span><span id="current-view-label">Portfolio overview</span></div><div class="top-status"><span class="tiny-dot"></span><span id="runtime-status">Loading models</span></div></header>
+    <main id="main">
+      <div class="page-heading"><div><div class="eyebrow">RISK INTELLIGENCE</div><h1>Portfolio overview<span class="title-dot">.</span></h1><p>A closer look at your customers. A clearer view of their risk.</p></div><div class="heading-actions"><button class="button" id="export" disabled><span data-icon="download"></span>Export scores</button><button class="button primary" id="new-assessment" disabled><span data-icon="plus"></span>Assess new customer</button></div></div>
+      <div id="load-state" class="load-state" role="status"><span class="spinner"></span><h2>Preparing your risk workspace</h2><p>Loading three trained prediction engines…</p></div>
+      <div id="dashboard" hidden>
+        <section id="customer-predictor" class="customer-predictor" aria-labelledby="predictor-title" hidden>
+          <div class="section-heading"><div><div class="eyebrow">NEW CUSTOMER ASSESSMENT</div><h2 id="predictor-title">Predict customer risk</h2></div><span class="small-badge">ALL 3 MODELS</span></div>
+          <p class="muted">Enter your customer's credit and risk values below. Ranges show observed training values, including negative source values; they are not universal eligibility limits.</p>
+          <form id="customer-prediction-form" novalidate>
+            <label class="customer-id-field" for="prediction-customer-id">Customer ID <span class="muted small">(optional, for identifying the result)</span><input id="prediction-customer-id" type="text" maxlength="64" autocomplete="off" placeholder="Enter customer ID"></label>
+            <div id="customer-inputs" class="customer-input-grid"></div>
+            <p id="prediction-error" class="error-text" role="alert"></p>
+            <div class="predictor-actions"><button id="predict-customer" type="submit" class="button primary">Predict customer risk</button><button id="load-example" type="button" class="button">Load sample inputs</button><button id="clear-customer-form" type="button" class="button">Clear form</button></div>
+            <p id="prediction-status" class="small muted" role="status">Enter values, then click Predict customer risk.</p>
+          </form>
+          <section id="customer-result" class="customer-result" hidden aria-live="polite" aria-labelledby="prediction-for"><h3 id="prediction-for">Customer prediction result</h3><strong id="customer-risk-label"></strong><p id="customer-votes"></p><div id="customer-model-results" class="customer-model-results"></div><p class="small muted">These are uncalibrated model risk scores. High risk means a Bad score of 50% or higher; Low risk means below 50%.</p></section>
+        </section>
+        <div id="portfolio-view">
+        <section aria-labelledby="engine-title"><div class="section-heading"><h2 id="engine-title">Prediction engines <span class="small-badge">3 MODELS</span></h2><span class="muted small">Select an engine to explore its predictions</span></div><div id="model-cards" class="model-grid"></div></section>
+        <section class="kpis" aria-label="Portfolio summary" id="kpis"></section>
+        <section class="spectrum-panel" aria-labelledby="spectrum-title"><div class="spectrum-intro"><span class="eyebrow">PORTFOLIO SIGNAL</span><h2 id="spectrum-title">The shape of risk</h2><p id="spectrum-description">Distribution across the sample portfolio.</p><div class="spectrum-legend"><span><i class="dot low"></i>Low risk</span><span><i class="dot high"></i>High risk</span></div></div><div class="spectrum-chart"><div id="histogram" class="histogram" role="img" aria-label="Risk score distribution"></div><div class="axis"><span>0% · Lower score</span><span>50%</span><span>100% · Higher score</span></div></div></section>
+        <section class="table-panel" aria-labelledby="table-title"><div class="table-title"><div><h2 id="table-title">Customer analysis <span class="small-badge" id="table-total">80</span></h2><p>Test records matched to raw Customer IDs</p></div><span class="data-tag"><span class="tiny-dot"></span>Real model predictions</span></div>
+          <div class="table-toolbar"><div class="filter-group" role="group" aria-label="Risk filter"><button data-filter="all" aria-pressed="true">All applications</button><button data-filter="low">Low risk</button><button data-filter="high">High risk</button></div><div class="search"><span data-icon="search"></span><label class="sr-only" for="search">Search customer ID</label><input id="search" type="search" placeholder="Search application…" autocomplete="off"><button id="clear-search" aria-label="Clear search" hidden>×</button></div></div>
+          <div class="table-scroll"><table><thead><tr><th scope="col" aria-sort="ascending" id="id-heading"><button id="sort-id">Customer ID <span>↕</span></button></th><th scope="col">Credit score <span class="muted">CR22</span></th><th scope="col" id="risk-heading" aria-sort="none"><button id="sort-risk">Risk score <span>↕</span></button></th><th scope="col">Risk result</th><th scope="col">Model spread <span title="Gradient Boosting → Random Forest → Logistic Regression. Not a time trend.">ⓘ</span></th><th scope="col">Observed outcome</th><th scope="col" class="sticky-action"><span class="sr-only">Inspect</span></th></tr></thead><tbody id="rows"></tbody></table></div>
+          <div id="no-results" class="empty" hidden><h3>No matching applications</h3><p>Try another application ID or clear your filters.</p><button id="clear-filters" class="button">Clear filters</button></div>
+          <div class="table-footer"><span id="page-count" role="status"></span><div class="pagination"><button class="button" id="prev" aria-label="Previous page">←</button><span id="page-number"></span><button class="button" id="next" aria-label="Next page">→</button></div></div>
+        </section>
+        </div>
+        <footer class="page-footer"><span><span data-icon="shield"></span>Predictions stay in your browser</span><button id="score-notes">About these risk scores <span>↗</span></button></footer>
+      </div>
+    </main>
+  </div>
+  <dialog id="inspection" class="drawer" aria-labelledby="drawer-title"><div class="drawer-head"><div><div class="eyebrow">APPLICATION INTELLIGENCE</div><h2 id="drawer-title">Application</h2></div><button class="icon-button close-dialog" aria-label="Close inspection">×</button></div><div class="drawer-body"><p id="drawer-customer-id" class="small muted" style="margin-bottom:16px"></p><div class="drawer-meta"><span id="drawer-engine"></span><span class="small-badge" id="scenario-label">ORIGINAL</span></div><div id="score-zone" aria-live="polite"><div class="gauge-wrap"><svg viewBox="0 0 280 160" class="gauge" aria-hidden="true"><path class="gauge-track" d="M30 135 A110 110 0 0 1 250 135" pathLength="100"/><path id="gauge-fill" d="M30 135 A110 110 0 0 1 250 135" pathLength="100"/></svg><div class="gauge-value"><span id="gauge-number">—</span><small>Model risk score</small></div></div><div id="predicted-outcome" class="predicted-outcome"></div><div class="gauge-caption"><span id="drawer-band"></span><span id="score-change" class="muted small"></span></div></div><p class="score-note">Uncalibrated P(Bad) from a model trained on balanced data.</p><p id="scoring-state" class="inline-status" role="status"></p>
+      <section class="drawer-section"><div class="section-heading"><h3>Three-model consensus</h3><span class="small-badge" id="agreement">—</span></div><div class="consensus-grid" id="consensus"></div><div class="consensus-summary" id="consensus-summary"></div></section>
+      <section class="drawer-section"><div class="section-heading"><h3>What's driving this score?</h3><span class="muted small">SHAP estimate</span></div><div class="explain-legend"><span class="low-text">← Toward Good</span><span class="high-text">Toward Bad →</span></div><div id="explanation" class="explanation"></div><p class="small muted" id="explanation-note"></p></section>
+      <section class="drawer-section"><div class="section-heading"><h3><span data-icon="sliders"></span>What-if sandbox</h3><button id="reset-scenario" class="text-button">Reset</button></div><p class="small muted">Adjust inputs to explore the model's response. Changes are temporary and do not imply cause and effect.</p><form id="scenario-form" novalidate><div id="sliders"></div><details id="all-fields"><summary>Customer credit and risk inputs ? 12 features</summary><div id="feature-fields" class="feature-fields"></div></details><p id="input-error" role="alert" class="error-text"></p><button type="submit" class="button primary full" id="recalculate">Predict customer risk <span>↗</span></button></form></section>
+    </div><div class="drawer-foot"><span data-icon="lock"></span>Inputs stay in this tab. Closing discards scenario changes.</div></dialog>
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><div class="drawer-head"><h2 id="info-title">Methodology</h2><button class="icon-button close-dialog" aria-label="Close information">×</button></div><div id="info-content" class="info-content"></div></dialog>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+  <noscript><p>This dashboard needs JavaScript to run the trained models.</p></noscript>
+</body>
+</html>

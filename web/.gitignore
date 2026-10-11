@@ -1,0 +1,11 @@
+node_modules/
+.openai/
+.sites-runtime/
+.sites-local/
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.tar.gz
+tests/screenshots/
