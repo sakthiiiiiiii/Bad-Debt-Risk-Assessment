@@ -27,12 +27,12 @@ The application runs from your local repository. The page also includes 80 test 
 ## Project Structure
 
 - `data/raw/` - Original Excel source files.
-- `data/processed/` - Cleaned and feature-selected datasets.
-- `models/` - Trained models and tuning artifacts.
+- `data/processed/` - Selected modeling dataset; cleaning and training generate additional CSV outputs when run.
+- `models/` - Saved best model and fitted comparison models.
 - `notebooks/` - Exploratory analysis and modeling notebook.
 - `src/` - Python execution scripts.
 - `results/` - Model comparison tables and evaluation outputs.
-- `reports/` - Presentation and PDF deliverables.
+- `reports/` - Final presentation and project PDF deliverables.
 - `reports/figures/` - Generated charts and images.
 
 ## Run
@@ -63,3 +63,9 @@ Run Bad Debt from top to bottom: load data, split, impute, balance training rows
 The raw files contain numeric Customer IDs but no names, father names, or locations. The table and inspection drawer show IDs verified by matching all 12 original feature values to the raw workbooks. New assessments use credit/risk inputs only.
 
 The prediction form opens from the left-panel **Predict customer risk** button; **Portfolio overview** returns to the dashboard without clearing inputs. Each feature shows a one-sentence explanation and its observed training-data minimum and maximum. Bureau fields without definitions in the column-description workbook are labeled as undocumented. Ranges describe the source data and do not enforce universal eligibility limits.
+
+## Repository maintenance
+
+The repository keeps the source workbooks, three notebooks, selected modeling dataset, saved models, model comparison results, final presentation, supporting figures, and complete dashboard. Unused intermediate datasets, the old tuning artifact, notebook checkpoint, and earlier presentation draft have been removed. The modeling notebook regenerates train/test CSV exports when run.
+
+The root `.gitignore` excludes local environments, caches, notebook checkpoints, and local configuration. The large trained-model bundle uses Git LFS; install Git LFS before cloning to download it correctly.

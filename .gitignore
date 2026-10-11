@@ -9,3 +9,5 @@ __pycache__/
 .env.*
 *.tar.gz
 tests/screenshots/
+
+.ipynb_checkpoints/

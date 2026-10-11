@@ -55,9 +55,8 @@ Risk bands (<30%, 30–60%, >=60%) are illustrative UI categories. Model scores 
 - `app.py`: FastAPI/Uvicorn server.
 - `__init__.py`: Python package file.
 - `dist/`: webpage, styles, prediction code, and the three saved model assets.
-- `.gitignore`: excludes generated caches and local environment files.
+- Root `.gitignore`: excludes generated caches and local environment files.
 - `README.md`: setup and run instructions.
-- `.git/`: local Git history; no remote is configured.
 
 Python may regenerate `__pycache__` when the server starts; it is ignored by Git.
 
