@@ -1,0 +1,13 @@
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+openpyxl
+joblib
+shap
+nbformat
+nbclient
+ipykernel
+fastapi
+uvicorn
